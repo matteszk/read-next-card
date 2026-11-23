@@ -1,0 +1,17 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "further-reading/card",
+	"title": "Further Reading",
+	"category": "widgets",
+	"icon": "book-alt",
+	"description": "Link to a related post with a card. Pick one, or leave it on Automatic.",
+	"keywords": [ "related", "read next", "link" ],
+	"textdomain": "further-reading",
+	"attributes": {
+		"postId": { "type": "number", "default": 0 }
+	},
+	"usesContext": [ "postId" ],
+	"supports": { "html": false },
+	"editorScript": "file:./editor.js"
+}
