@@ -1,4 +1,4 @@
-# Further Reading
+# Read Next Card
 
 A WordPress block that adds a "Further reading" card linking to another post. Pick the post yourself, or leave it on **Automatic** and the block finds the post that shares the most categories and tags.
 
@@ -13,7 +13,7 @@ Originally built in 2022 as a shortcode for a large corporate blog; rebuilt from
 
 ## Usage
 
-Add the **Further Reading** block to a post. Choose a post under **Linked post** in the block sidebar, or keep **Automatic**.
+Add the **Read Next Card** block to a post. Choose a post under **Linked post** in the block sidebar, or keep **Automatic**.
 
 If Automatic finds nothing (the post has no categories or tags in common with others), the block renders nothing on the front end.
 

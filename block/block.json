@@ -1,13 +1,13 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "further-reading/card",
-	"title": "Further Reading",
+	"name": "read-next-card/card",
+	"title": "Read Next Card",
 	"category": "widgets",
 	"icon": "book-alt",
 	"description": "Link to a related post with a card. Pick one, or leave it on Automatic.",
 	"keywords": [ "related", "read next", "link" ],
-	"textdomain": "further-reading",
+	"textdomain": "read-next-card",
 	"attributes": {
 		"postId": { "type": "number", "default": 0 }
 	},

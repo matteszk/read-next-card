@@ -1,5 +1,5 @@
 /**
- * Editor UI for the Further Reading block. Plain JS, no build step.
+ * Editor UI for the Read Next Card block. Plain JS, no build step.
  */
 ( function ( wp ) {
 	const { registerBlockType } = wp.blocks;
@@ -10,7 +10,7 @@
 	const ServerSideRender = wp.serverSideRender;
 	const { __ } = wp.i18n;
 
-	registerBlockType( 'further-reading/card', {
+	registerBlockType( 'read-next-card/card', {
 		edit( { attributes, setAttributes, context } ) {
 			const blockProps = useBlockProps();
 
@@ -27,9 +27,9 @@
 			);
 
 			const options = [
-				{ label: __( 'Automatic (most related)', 'further-reading' ), value: 0 },
+				{ label: __( 'Automatic (most related)', 'read-next-card' ), value: 0 },
 				...( posts || [] ).map( ( post ) => ( {
-					label: post.title.rendered || __( '(no title)', 'further-reading' ),
+					label: post.title.rendered || __( '(no title)', 'read-next-card' ),
 					value: post.id,
 				} ) ),
 			];
@@ -42,12 +42,12 @@
 					null,
 					el(
 						PanelBody,
-						{ title: __( 'Linked post', 'further-reading' ) },
+						{ title: __( 'Linked post', 'read-next-card' ) },
 						el( SelectControl, {
 							value: attributes.postId,
 							options,
 							onChange: ( value ) => setAttributes( { postId: parseInt( value, 10 ) } ),
-							help: __( 'Automatic picks the post sharing the most categories and tags.', 'further-reading' ),
+							help: __( 'Automatic picks the post sharing the most categories and tags.', 'read-next-card' ),
 						} )
 					)
 				),
@@ -56,14 +56,14 @@
 					blockProps,
 					// Live preview from PHP; shows a placeholder if nothing matches.
 					el( ServerSideRender, {
-						block: 'further-reading/card',
+						block: 'read-next-card/card',
 						attributes,
 						urlQueryArgs: { post_id: context.postId },
 						EmptyResponsePlaceholder: () =>
 							el( Placeholder, {
 								icon: 'book-alt',
-								label: __( 'Further Reading', 'further-reading' ),
-								instructions: __( 'No related post found yet. Pick one in the sidebar, or add categories and tags.', 'further-reading' ),
+								label: __( 'Read Next Card', 'read-next-card' ),
+								instructions: __( 'No related post found yet. Pick one in the sidebar, or add categories and tags.', 'read-next-card' ),
 							} ),
 					} )
 				)

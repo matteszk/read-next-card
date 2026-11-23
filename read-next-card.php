@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name:       Further Reading
- * Plugin URI:        https://github.com/matteszk/further-reading
+ * Plugin Name:       Read Next Card
+ * Plugin URI:        https://github.com/matteszk/read-next-card
  * Description:       A "Further reading" card block that links to a chosen post, or automatically picks the most related one.
  * Version:           0.1.0
  * Requires at least: 6.1
@@ -10,26 +10,27 @@
  * Author URI:        https://matthewszklarz.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       further-reading
+ * Text Domain:       read-next-card
+ * Update URI:        false
  */
 
 // Block direct access to this file outside WordPress.
 defined( 'ABSPATH' ) || exit;
 
-define( 'FRD_VERSION', '0.1.0' );
+define( 'RNC_VERSION', '0.1.0' );
 
 /**
  * Register the block. It's dynamic: the post stores only the chosen ID (or 0
  * for automatic), and the card is rendered fresh on each view so titles and
  * images stay current.
  */
-function frd_register_block() {
+function rnc_register_block() {
 	register_block_type(
 		__DIR__ . '/block',
-		array( 'render_callback' => 'frd_render_block' )
+		array( 'render_callback' => 'rnc_render_block' )
 	);
 }
-add_action( 'init', 'frd_register_block' );
+add_action( 'init', 'rnc_register_block' );
 
 /**
  * Find the post that shares the most categories and tags with the given post.
@@ -38,7 +39,7 @@ add_action( 'init', 'frd_register_block' );
  * @param int $post_id The post the card appears in.
  * @return int Related post ID, or 0 if none share a term.
  */
-function frd_find_related( $post_id ) {
+function rnc_find_related( $post_id ) {
 	$categories = wp_get_post_categories( $post_id );
 	$tags       = wp_get_post_tags( $post_id, array( 'fields' => 'ids' ) );
 
@@ -98,13 +99,13 @@ function frd_find_related( $post_id ) {
  * @param WP_Block $block      Block instance, used for the current post's ID.
  * @return string
  */
-function frd_render_block( $attributes, $content = '', $block = null ) {
+function rnc_render_block( $attributes, $content = '', $block = null ) {
 	$current_id = $block->context['postId'] ?? get_the_ID();
 	$target_id  = (int) ( $attributes['postId'] ?? 0 );
 
 	// 0 means "automatic".
 	if ( ! $target_id && $current_id ) {
-		$target_id = frd_find_related( $current_id );
+		$target_id = rnc_find_related( $current_id );
 	}
 
 	$target = $target_id ? get_post( $target_id ) : null;
@@ -112,20 +113,20 @@ function frd_render_block( $attributes, $content = '', $block = null ) {
 		return '';
 	}
 
-	wp_enqueue_style( 'further-reading', plugins_url( 'style.css', __FILE__ ), array(), FRD_VERSION );
+	wp_enqueue_style( 'read-next-card', plugins_url( 'style.css', __FILE__ ), array(), RNC_VERSION );
 
 	$title = wp_trim_words( get_the_title( $target ), 12 );
 
 	ob_start();
 	?>
-	<aside class="frd">
-		<a class="frd__card" href="<?php echo esc_url( get_permalink( $target ) ); ?>">
+	<aside class="rnc">
+		<a class="rnc__card" href="<?php echo esc_url( get_permalink( $target ) ); ?>">
 			<?php if ( has_post_thumbnail( $target ) ) : ?>
-				<span class="frd__image"><?php echo get_the_post_thumbnail( $target, 'medium', array( 'alt' => '' ) ); ?></span>
+				<span class="rnc__image"><?php echo get_the_post_thumbnail( $target, 'medium', array( 'alt' => '' ) ); ?></span>
 			<?php endif; ?>
-			<span class="frd__text">
-				<span class="frd__kicker"><?php esc_html_e( 'Further reading', 'further-reading' ); ?></span>
-				<span class="frd__title"><?php echo esc_html( $title ); ?></span>
+			<span class="rnc__text">
+				<span class="rnc__kicker"><?php esc_html_e( 'Further reading', 'read-next-card' ); ?></span>
+				<span class="rnc__title"><?php echo esc_html( $title ); ?></span>
 			</span>
 		</a>
 	</aside>
