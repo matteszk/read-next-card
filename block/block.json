@@ -13,5 +13,6 @@
 	},
 	"usesContext": [ "postId" ],
 	"supports": { "html": false },
-	"editorScript": "file:./editor.js"
+	"editorScript": "file:./editor.js",
+	"style": "file:./style.css"
 }

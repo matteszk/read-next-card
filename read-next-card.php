@@ -17,8 +17,6 @@
 // Block direct access to this file outside WordPress.
 defined( 'ABSPATH' ) || exit;
 
-define( 'RNC_VERSION', '0.1.0' );
-
 /**
  * Register the block. It's dynamic: the post stores only the chosen ID (or 0
  * for automatic), and the card is rendered fresh on each view so titles and
@@ -112,8 +110,6 @@ function rnc_render_block( $attributes, $content = '', $block = null ) {
 	if ( ! $target || 'publish' !== $target->post_status ) {
 		return '';
 	}
-
-	wp_enqueue_style( 'read-next-card', plugins_url( 'style.css', __FILE__ ), array(), RNC_VERSION );
 
 	$title = wp_trim_words( get_the_title( $target ), 12 );
 
